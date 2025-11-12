@@ -1,0 +1,7 @@
+# Tiny Terminal defaults for this repo
+fps = 75
+column_width = 2
+# 0.5 = sparse, 1.0 = default, 2.0 = dense
+density = 1.2
+charset = "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉ0123456789@#$%&*"
+green = true

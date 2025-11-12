@@ -1,0 +1,5 @@
+# Example: make it super dense for demos
+fps = 90
+column_width = 2
+density = 1.75
+charset = "ﾐﾅｾﾛｸｹ012345789"
