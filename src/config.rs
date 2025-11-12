@@ -32,13 +32,19 @@ impl Config {
     pub fn load(override_path: Option<PathBuf>) -> Self {
         // Priority: explicit path > project file (cwd up) > user config > defaults
         if let Some(p) = override_path {
-            if let Ok(cfg) = Self::from_file(&p) { return cfg; }
+            if let Ok(cfg) = Self::from_file(&p) {
+                return cfg;
+            }
         }
         if let Some(p) = find_project_file() {
-            if let Ok(cfg) = Self::from_file(&p) { return cfg; }
+            if let Ok(cfg) = Self::from_file(&p) {
+                return cfg;
+            }
         }
         if let Some(p) = user_config_path() {
-            if let Ok(cfg) = Self::from_file(&p) { return cfg; }
+            if let Ok(cfg) = Self::from_file(&p) {
+                return cfg;
+            }
         }
         Self::default()
     }
@@ -53,7 +59,9 @@ impl Config {
 fn user_config_path() -> Option<PathBuf> {
     if let Some(proj) = ProjectDirs::from("io", "ArcQubit", "tiny-terminal") {
         let p = proj.config_dir().join("config.toml");
-        if p.exists() { return Some(p); }
+        if p.exists() {
+            return Some(p);
+        }
     }
     None
 }
@@ -63,8 +71,12 @@ fn find_project_file() -> Option<PathBuf> {
     let mut cur = std::env::current_dir().ok()?;
     loop {
         let cand = cur.join(".tiny-terminal.toml");
-        if cand.exists() { return Some(cand); }
-        if !(cur.pop()) { break; }
+        if cand.exists() {
+            return Some(cand);
+        }
+        if !(cur.pop()) {
+            break;
+        }
     }
     None
 }

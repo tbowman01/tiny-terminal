@@ -1,4 +1,8 @@
-use crossterm::{cursor, queue, style::{Color, Print, ResetColor, SetForegroundColor}, terminal::{Clear, ClearType}};
+use crossterm::{
+    cursor, queue,
+    style::{Color, Print, ResetColor, SetForegroundColor},
+    terminal::{Clear, ClearType},
+};
 use rand::{rngs::StdRng, Rng, SeedableRng};
 use std::io::{stdout, Write};
 use std::time::{Duration, Instant};
@@ -39,7 +43,11 @@ pub fn run(cfg: &Config, cancel_key: Option<char>) -> anyhow::Result<()> {
         let add = ((columns as f32) * cfg.density).ceil() as usize;
         for _ in 0..add {
             let col = rng.gen_range(0..columns) * cfg.column_width.max(1);
-            drops.push(Drop { x: col, y: -(rng.gen_range(0..(h as u16)) as i16), speed: rng.gen_range(1..=3) });
+            drops.push(Drop {
+                x: col,
+                y: -(rng.gen_range(0..(h as u16)) as i16),
+                speed: rng.gen_range(1..=3),
+            });
         }
 
         // Draw frame
@@ -49,9 +57,13 @@ pub fn run(cfg: &Config, cancel_key: Option<char>) -> anyhow::Result<()> {
             d.y += d.speed as i16;
             if d.y >= 0 && (d.y as u16) < h {
                 let ch = pick_char(&cfg, &mut rng);
-                if cfg.green { queue!(stdout, SetForegroundColor(Color::Green))?; }
+                if cfg.green {
+                    queue!(stdout, SetForegroundColor(Color::Green))?;
+                }
                 queue!(stdout, cursor::MoveTo(d.x, d.y as u16), Print(ch))?;
-                if cfg.green { queue!(stdout, ResetColor)?; }
+                if cfg.green {
+                    queue!(stdout, ResetColor)?;
+                }
             }
         }
         stdout.flush()?;
@@ -67,7 +79,11 @@ pub fn run(cfg: &Config, cancel_key: Option<char>) -> anyhow::Result<()> {
                     KeyCode::Char('q') | KeyCode::Esc => break,
                     KeyCode::Char('c') if k.modifiers.contains(KeyModifiers::CONTROL) => break,
                     KeyCode::Char(c) => {
-                        if let Some(ck) = cancel_key { if c == ck { break; } }
+                        if let Some(ck) = cancel_key {
+                            if c == ck {
+                                break;
+                            }
+                        }
                     }
                     _ => {}
                 }
@@ -77,7 +93,9 @@ pub fn run(cfg: &Config, cancel_key: Option<char>) -> anyhow::Result<()> {
         // Frame timing
         let now = Instant::now();
         let elapsed = now - last;
-        if elapsed < frame { std::thread::sleep(frame - elapsed); }
+        if elapsed < frame {
+            std::thread::sleep(frame - elapsed);
+        }
         last = now;
     }
 
@@ -90,7 +108,9 @@ pub fn run(cfg: &Config, cancel_key: Option<char>) -> anyhow::Result<()> {
 
 fn pick_char(cfg: &Config, rng: &mut StdRng) -> char {
     let bytes = cfg.charset.as_bytes();
-    if bytes.is_empty() { return '.'; }
+    if bytes.is_empty() {
+        return '.';
+    }
     let i = rng.gen_range(0..bytes.len());
     bytes[i] as char
 }

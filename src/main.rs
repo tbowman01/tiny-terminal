@@ -12,7 +12,11 @@ enum Effect {
 }
 
 #[derive(Parser, Debug)]
-#[command(name = "tiny-terminal", version, about = "Tiny terminal with Matrix default")]
+#[command(
+    name = "tiny-terminal",
+    version,
+    about = "Tiny terminal with Matrix default"
+)]
 struct Args {
     /// Effect to run (defaults to Matrix)
     #[arg(long, value_enum)]
@@ -38,8 +42,12 @@ struct Args {
 fn main() -> anyhow::Result<()> {
     let args = Args::parse();
     let mut cfg = Config::load(args.config);
-    if let Some(fps) = args.fps { cfg.fps = fps; }
-    if let Some(d) = args.density { cfg.density = d; }
+    if let Some(fps) = args.fps {
+        cfg.fps = fps;
+    }
+    if let Some(d) = args.density {
+        cfg.density = d;
+    }
 
     match args.effect.unwrap_or(default_effect()) {
         #[cfg(feature = "effect-matrix")]
@@ -51,4 +59,6 @@ fn main() -> anyhow::Result<()> {
 }
 
 #[cfg(feature = "effect-matrix")]
-fn default_effect() -> Effect { Effect::Matrix }
+fn default_effect() -> Effect {
+    Effect::Matrix
+}

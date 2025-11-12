@@ -1,18 +1,50 @@
 # tiny-terminal
 
+[![CI](https://github.com/tbowman01/tiny-terminal/workflows/CI/badge.svg)](https://github.com/tbowman01/tiny-terminal/actions)
+
 A tiny, hackable terminal toy written in Rust. Defaults to a Matrix-style rain effect.
+
+## Installation
+
+### From Release (recommended)
+
+Download the latest binary for your platform from [Releases](https://github.com/tbowman01/tiny-terminal/releases).
+
+### From Source
+
+```bash
+cargo install tiny-terminal
+```
+
+Or clone and build:
+
+```bash
+git clone https://github.com/tbowman01/tiny-terminal.git
+cd tiny-terminal
+cargo build --release
+```
 
 ## Quickstart
 
 ```bash
-# build & run
-cargo run --release
+# run with defaults
+tiny-terminal
 
 # tweak density and fps
-cargo run --release -- --density 1.5 --fps 90
+tiny-terminal --density 1.5 --fps 90
 
 # point to a specific config file
-cargo run --release -- --config ./examples/project-config/.tiny-terminal.toml
+tiny-terminal --config ./examples/project-config/.tiny-terminal.toml
+```
+
+### Development
+
+```bash
+# build & run from source
+cargo run --release
+
+# with options
+cargo run --release -- --density 1.5 --fps 90
 ```
 
 ### Keys
@@ -28,15 +60,23 @@ Put a `.tiny-terminal.toml` in your repo or any parent directory to override def
 
 Add a module in `src/effects/`, export it in `mod.rs`, add a `feature` in `Cargo.toml`, and extend the `Effect` enum in `main.rs`.
 
-### Packaging
+## CI/CD & Releases
 
-```bash
-# release binary
-cargo build --release
+This project uses GitHub Actions for continuous integration and automated releases:
 
-# strip + tiny: handled via .cargo/config.toml (LTO/strip)
-```
+- **CI Pipeline**: Runs on every PR and push
+  - Build and test on Linux, macOS, and Windows
+  - Clippy linting
+  - Rustfmt formatting checks
+  - Security audit with cargo-audit
 
-### License
+- **Release Pipeline**: Triggered by version tags (e.g., `v0.1.0`)
+  - Builds optimized binaries for multiple platforms
+  - Creates GitHub Release with artifacts
+  - Publishes to crates.io
+
+See [RELEASING.md](RELEASING.md) for details on the release process and semantic versioning.
+
+## License
 
 Dual-licensed under Apache-2.0 or MIT.
