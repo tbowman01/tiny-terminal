@@ -1,0 +1,10 @@
+[build]
+target-dir = "target"
+
+[term]
+color = "auto"
+
+[profile.release]
+codegen-units = 1
+lto = true
+strip = "symbols"
