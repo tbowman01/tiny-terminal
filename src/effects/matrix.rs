@@ -45,7 +45,7 @@ pub fn run(cfg: &Config, cancel_key: Option<char>) -> anyhow::Result<()> {
             let col = rng.gen_range(0..columns) * cfg.column_width.max(1);
             drops.push(Drop {
                 x: col,
-                y: -(rng.gen_range(0..(h as u16)) as i16),
+                y: -(rng.gen_range(0..h) as i16),
                 speed: rng.gen_range(1..=3),
             });
         }
@@ -56,7 +56,7 @@ pub fn run(cfg: &Config, cancel_key: Option<char>) -> anyhow::Result<()> {
         for d in drops.iter_mut() {
             d.y += d.speed as i16;
             if d.y >= 0 && (d.y as u16) < h {
-                let ch = pick_char(&cfg, &mut rng);
+                let ch = pick_char(cfg, &mut rng);
                 if cfg.green {
                     queue!(stdout, SetForegroundColor(Color::Green))?;
                 }
