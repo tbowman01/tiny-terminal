@@ -221,19 +221,54 @@ tiny-terminal/
 
 ## Testing
 
+The project includes comprehensive unit and integration tests.
+
+### Test Coverage
+
+- **Unit Tests**: 12 tests covering configuration loading, serialization, and error handling
+- **Integration Tests**: 9 tests verifying configuration hierarchy and file parsing
+- **Total**: 21 tests ensuring robust configuration management
+
+### Running Tests
+
 ```bash
-# Run all tests
+# Run all tests (unit + integration)
 cargo test
 
 # Run with verbose output
 cargo test -- --nocapture
+
+# Run only unit tests
+cargo test --lib
+
+# Run only integration tests
+cargo test --test '*'
 
 # Run specific test
 cargo test test_name
 
 # Run with make
 make test
+
+# Run tests with coverage (requires cargo-tarpaulin)
+cargo tarpaulin --out Html
 ```
+
+### Test Categories
+
+**Configuration Tests** (`src/config.rs`):
+- Default configuration values
+- TOML serialization/deserialization
+- File loading (valid/invalid files)
+- Configuration hierarchy (explicit → project → user → defaults)
+- Error handling for missing/invalid files
+
+**Integration Tests** (`tests/config_integration_tests.rs`):
+- Configuration file parsing with various formats
+- Partial and full configuration files
+- Extreme and boundary values
+- Unicode character support
+- Multi-file isolation
 
 ## Contributing
 
@@ -288,6 +323,18 @@ If the animation is choppy:
 - Reduce density: `--density 0.5`
 - Close other resource-intensive applications
 - Ensure you're running the release build (`cargo run --release`)
+
+## Versioning
+
+This project uses [Calendar Versioning](https://calver.org/) (CalVer) with the format `YYYY.MM.MICRO`:
+
+- **YYYY**: Full year (e.g., 2025)
+- **MM**: Month (e.g., 11 for November)
+- **MICRO**: Incrementing number for releases within the same month
+
+Example: `2025.11.0` is the first release in November 2025.
+
+See [RELEASING.md](RELEASING.md) for the complete release process.
 
 ## License
 

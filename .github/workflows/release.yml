@@ -3,13 +3,13 @@ name: Release
 on:
   push:
     tags:
-      - 'v*.*.*'
+      - 'v*.*.*'      # CalVer format: vYYYY.MM.MICRO (e.g., v2025.11.0)
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Tag to release'
+        description: 'Tag to release (CalVer: vYYYY.MM.MICRO)'
         required: true
-        default: 'v0.1.0'
+        default: 'v2025.11.0'
 
 env:
   CARGO_TERM_COLOR: always

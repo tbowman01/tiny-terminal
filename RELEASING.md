@@ -1,32 +1,61 @@
 # Release Process
 
-This document describes the semantic versioning and release process for tiny-terminal.
+This document describes the calendar versioning and release process for tiny-terminal.
 
-## Semantic Versioning
+## Calendar Versioning (CalVer)
 
-We follow [Semantic Versioning 2.0.0](https://semver.org/):
+We follow [Calendar Versioning](https://calver.org/) using the format `YYYY.MM.MICRO`:
 
-- **MAJOR** version (X.0.0): Incompatible API changes
-- **MINOR** version (0.X.0): Add functionality in a backward compatible manner
-- **PATCH** version (0.0.X): Backward compatible bug fixes
+- **YYYY**: Full year (e.g., 2025)
+- **MM**: Zero-padded month (e.g., 01 for January, 11 for November)
+- **MICRO**: Incrementing number for releases within the same month (0, 1, 2, ...)
+
+### Examples
+
+- `2025.11.0` - First release in November 2025
+- `2025.11.1` - Second release (bugfix or feature) in November 2025
+- `2025.12.0` - First release in December 2025
+
+### Why CalVer?
+
+1. **Time-based releases**: Makes it clear when a release was published
+2. **Predictable versioning**: No subjective decisions about major vs minor changes
+3. **Simple communication**: "Get the November 2025 release" is clearer
+4. **Continuous delivery friendly**: Supports regular, time-based releases
+5. **Breaking changes**: Can occur in any release; clearly documented in CHANGELOG
 
 ## Creating a Release
 
-### 1. Update Version
+### 1. Determine New Version
+
+Use CalVer format `YYYY.MM.MICRO`:
+
+```bash
+# First release in a month: YYYY.MM.0
+# Example: 2025.11.0
+
+# Additional releases in same month: YYYY.MM.1, YYYY.MM.2, etc.
+# Example: 2025.11.1
+
+# New month resets MICRO to 0
+# Example: 2025.12.0
+```
+
+### 2. Update Version
 
 Update the version in `Cargo.toml`:
 
 ```toml
 [package]
-version = "0.2.0"  # Update this
+version = "2025.11.1"  # Update using CalVer format
 ```
 
-### 2. Update CHANGELOG.md
+### 3. Update CHANGELOG.md
 
 Move items from `[Unreleased]` to a new version section:
 
 ```markdown
-## [0.2.0] - 2025-11-13
+## [2025.11.1] - 2025-11-15
 
 ### Added
 - New feature X
@@ -34,23 +63,28 @@ Move items from `[Unreleased]` to a new version section:
 
 ### Fixed
 - Bug fix Z
+
+[Unreleased]: https://github.com/tbowman01/tiny-terminal/compare/v2025.11.1...HEAD
+[2025.11.1]: https://github.com/tbowman01/tiny-terminal/releases/tag/v2025.11.1
 ```
 
-### 3. Commit Changes
+### 4. Commit Changes
 
 ```bash
-git add Cargo.toml CHANGELOG.md
-git commit -m "Bump version to 0.2.0"
+git add Cargo.toml CHANGELOG.md Cargo.lock
+git commit -m "chore: bump version to 2025.11.1"
 ```
 
-### 4. Create and Push Tag
+### 5. Create and Push Tag
 
 ```bash
-git tag -a v0.2.0 -m "Release v0.2.0"
-git push origin v0.2.0
+# Use CalVer format: vYYYY.MM.MICRO
+git tag -a v2025.11.1 -m "Release v2025.11.1"
+git push origin main
+git push origin v2025.11.1
 ```
 
-### 5. Automated Process
+### 6. Automated Process
 
 Once the tag is pushed, GitHub Actions will automatically:
 
@@ -77,7 +111,7 @@ The CI pipeline runs on every push and pull request:
 
 ### Release Pipeline
 
-The release pipeline is triggered by pushing a version tag (e.g., `v0.2.0`):
+The release pipeline is triggered by pushing a version tag in CalVer format (e.g., `v2025.11.0`):
 
 1. Creates a GitHub Release
 2. Builds optimized binaries for all supported platforms
@@ -95,4 +129,4 @@ To enable crates.io publishing, add a `CARGO_TOKEN` secret:
 
 ## Version History
 
-- **v0.1.0** (2025-11-12): Initial release with Matrix effect
+- **v2025.11.0** (2025-11-12): Initial release with Matrix effect, comprehensive test suite, and CalVer adoption

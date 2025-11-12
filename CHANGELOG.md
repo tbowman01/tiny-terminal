@@ -3,16 +3,20 @@
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+and this project adheres to [Calendar Versioning](https://calver.org/) using the format `YYYY.MM.MICRO`.
 
 ## [Unreleased]
 
 ### Added
-- CI/CD workflows for automated testing and releases
-- Comprehensive Makefile for development tasks
-- Enhanced documentation with troubleshooting and examples
+- Comprehensive test suite with 12 unit tests and 9 integration tests
+- Detailed testing documentation in README
+- Calendar versioning (CalVer) using YYYY.MM.MICRO format
 
-## [0.1.0] - 2025-11-12
+### Changed
+- Migrated from semantic versioning to calendar versioning
+- Enhanced documentation with testing guidelines and coverage information
+
+## [2025.11.0] - 2025-11-12
 
 ### Added
 - Initial release of tiny-terminal
@@ -78,5 +82,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Minimal memory footprint
 - Low CPU usage even at high FPS
 
-[Unreleased]: https://github.com/tbowman01/tiny-terminal/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/tbowman01/tiny-terminal/releases/tag/v0.1.0
+[Unreleased]: https://github.com/tbowman01/tiny-terminal/compare/v2025.11.0...HEAD
+[2025.11.0]: https://github.com/tbowman01/tiny-terminal/releases/tag/v2025.11.0
